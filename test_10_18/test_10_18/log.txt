@@ -1,0 +1,10 @@
+file:d:\文件\c语言\test_10_18\test_10_18\test.c line:16 date:Oct 18 2020 time:13:58:55 i=0
+file:d:\文件\c语言\test_10_18\test_10_18\test.c line:16 date:Oct 18 2020 time:13:58:55 i=1
+file:d:\文件\c语言\test_10_18\test_10_18\test.c line:16 date:Oct 18 2020 time:13:58:55 i=2
+file:d:\文件\c语言\test_10_18\test_10_18\test.c line:16 date:Oct 18 2020 time:13:58:55 i=3
+file:d:\文件\c语言\test_10_18\test_10_18\test.c line:16 date:Oct 18 2020 time:13:58:55 i=4
+file:d:\文件\c语言\test_10_18\test_10_18\test.c line:16 date:Oct 18 2020 time:13:58:55 i=5
+file:d:\文件\c语言\test_10_18\test_10_18\test.c line:16 date:Oct 18 2020 time:13:58:55 i=6
+file:d:\文件\c语言\test_10_18\test_10_18\test.c line:16 date:Oct 18 2020 time:13:58:55 i=7
+file:d:\文件\c语言\test_10_18\test_10_18\test.c line:16 date:Oct 18 2020 time:13:58:55 i=8
+file:d:\文件\c语言\test_10_18\test_10_18\test.c line:16 date:Oct 18 2020 time:13:58:55 i=9
