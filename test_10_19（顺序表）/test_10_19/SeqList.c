@@ -1,6 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS 1
 #include "SeqList.h"
-void SeqListInit(SeqList* ps1)//Ë³Ğò±íµÄ³õÊ¼»¯
+void SeqListInit(SeqList* ps1)//é¡ºåºè¡¨çš„åˆå§‹åŒ–
 {
 	ps1->array =(int*)malloc(3*sizeof(int));
 	if (ps1->array == NULL)
@@ -11,7 +11,7 @@ void SeqListInit(SeqList* ps1)//Ë³Ğò±íµÄ³õÊ¼»¯
 	ps1->size = 0;
 	ps1->capacity = 3;
 }
-void SeqListDestory(SeqList* ps1)//Ë³Ğò±íµÄÏú»Ù
+void SeqListDestory(SeqList* ps1)//é¡ºåºè¡¨çš„é”€æ¯
 {
 	free(ps1->array);
 	ps1->array = NULL;
@@ -19,7 +19,7 @@ void SeqListDestory(SeqList* ps1)//Ë³Ğò±íµÄÏú»Ù
 	ps1->capacity = 0;
 
 }
-void SeqListPrint(SeqList* ps1)//Ë³Ğò±íµÄ´òÓ¡
+void SeqListPrint(SeqList* ps1)//é¡ºåºè¡¨çš„æ‰“å°
 {
 	int i;
 	for (i = 0; i < ps1->size; i++)
@@ -28,13 +28,13 @@ void SeqListPrint(SeqList* ps1)//Ë³Ğò±íµÄ´òÓ¡
 	}
 	printf("\n");
 }
-void CheckCapacity(SeqList* ps1)//¼ì²é¿Õ¼ä
+void CheckCapacity(SeqList* ps1)//æ£€æŸ¥ç©ºé—´
 {
 	if (ps1->size == ps1->capacity)
 	{
 		ps1->array = (int*)realloc(ps1->array,(ps1->capacity + 2)*sizeof(int)); 
 		ps1->capacity += 2;
-		/*printf("¿ª±Ù³É¹¦\n");*/
+		/*printf("å¼€è¾ŸæˆåŠŸ\n");*/
 	}
 	if (ps1->array == NULL)
 	{
@@ -42,18 +42,18 @@ void CheckCapacity(SeqList* ps1)//¼ì²é¿Õ¼ä
 	}
 	
 }
-void SeqListPushBack(SeqList* ps1, SLDataType x)//Ë³Ğò±íÎ²²å
+void SeqListPushBack(SeqList* ps1, SLDataType x)//é¡ºåºè¡¨å°¾æ’
 {
 	CheckCapacity(ps1);
-	ps1->array[(ps1->capacity)-(ps1->size)-1] = x;
+	ps1->array[ps1->size] = x;
 	ps1->size++;
 }
-void SeqListPopBack(SeqList* ps1)//Ë³Ğò±íÎ²É¾
+void SeqListPopBack(SeqList* ps1)//é¡ºåºè¡¨å°¾åˆ 
 {
 	assert(ps1 && ps1->size != 0);
 	ps1->size--;
 }
-void SeqListPushFront(SeqList* ps1, SLDataType x)//Ë³Ğò±íÍ·²å
+void SeqListPushFront(SeqList* ps1, SLDataType x)//é¡ºåºè¡¨å¤´æ’
 {
 	CheckCapacity(ps1);
 	int i = 0;
@@ -64,7 +64,7 @@ void SeqListPushFront(SeqList* ps1, SLDataType x)//Ë³Ğò±íÍ·²å
 	ps1->array[0] = x;
 	ps1->size++;
 }
-void SeqListPopFront(SeqList* ps1)//Ë³Ğò±íÍ·É¾
+void SeqListPopFront(SeqList* ps1)//é¡ºåºè¡¨å¤´åˆ 
 {
 	assert(ps1 && ps1->size != 0);
 	int i = 0;
@@ -74,22 +74,22 @@ void SeqListPopFront(SeqList* ps1)//Ë³Ğò±íÍ·É¾
 	}
 	ps1->size--;
 }
-void SeqListFind(SeqList* ps1, SLDataType x)//Ë³Ğò±í²éÕÒ
+void SeqListFind(SeqList* ps1, SLDataType x)//é¡ºåºè¡¨æŸ¥æ‰¾
 {
 	int i = 0;
 	for(i = 0; i < ps1->size;i++)
 	{
 		if (ps1->array[i] == x)
 		{
-			printf("ÏÂ±êÊÇ£º%d\n", i);
+			printf("ä¸‹æ ‡æ˜¯ï¼š%d\n", i);
 			return;
 		}
 		
 	}
-		printf("Ëù²éÕÒµÄÊı¾İ²»´æÔÚ\n");
+		printf("æ‰€æŸ¥æ‰¾çš„æ•°æ®ä¸å­˜åœ¨\n");
 	
 }
-void SeqListInsert(SeqList* ps1, int pos, SLDataType x)//Ë³Ğò±íÔÚposÎ»ÖÃ²åÈëx
+void SeqListInsert(SeqList* ps1, int pos, SLDataType x)//é¡ºåºè¡¨åœ¨posä½ç½®æ’å…¥x
 {
 	CheckCapacity(ps1);
 	int i = 0;
@@ -100,7 +100,7 @@ void SeqListInsert(SeqList* ps1, int pos, SLDataType x)//Ë³Ğò±íÔÚposÎ»ÖÃ²åÈëx
 	ps1->array[pos] = x;
 	ps1->size++;
 }
-void SepListErase(SeqList* ps1, int pos)//ÔÚË³Ğò±íµÄposÎ»ÖÃÉ¾³ı
+void SepListErase(SeqList* ps1, int pos)//åœ¨é¡ºåºè¡¨çš„posä½ç½®åˆ é™¤
 {
 	assert(ps1 && ps1->size != 0);
 	int i = 0;
