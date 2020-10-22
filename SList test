@@ -1,0 +1,143 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
+
+typedef struct ListNode
+{
+	int val;
+	struct ListNode* next;
+	
+}ListNode;
+static ListNode* OpenNewNode()//开辟节点
+{
+	ListNode* NewNode = (ListNode*)malloc(sizeof(ListNode));
+	if (NewNode == NULL)
+	{
+		printf("SListNode:%s", strerror(errno));
+	}
+	NewNode->next = NULL;
+	return NewNode;
+}
+void SListNodePushBack(ListNode** plist, int x)//单链表的尾插
+{
+	ListNode* NewNode = OpenNewNode();
+	NewNode->val = x;
+	ListNode* cur1 = *plist;
+	if (*plist == NULL)
+	{
+		*plist = NewNode;
+		return;
+	}
+	while (cur1->next != NULL)
+	{
+		cur1 = cur1->next;
+	}
+	cur1->next = NewNode;
+}
+void SListNodePrint(ListNode* plist)//打印单链表
+{
+	if (plist == NULL)
+	{
+		printf("要打印的对象不存在\n");
+		return;
+	}
+	ListNode* cur = plist;
+	while (cur != NULL)
+	{
+		printf("%d ", cur->val);
+		cur = cur->next;
+	}
+	printf("\n");
+}
+ListNode* SList()
+{
+	ListNode* plist = NULL;
+	//SListNodePushBack(&plist, 1);
+	//SListNodePushBack(&plist, 1);
+	SListNodePushBack(&plist, 1);
+	SListNodePushBack(&plist, 2);
+	SListNodePushBack(&plist, 6);
+	SListNodePushBack(&plist, 3);
+	SListNodePushBack(&plist, 4);
+	SListNodePushBack(&plist, 5);
+	SListNodePushBack(&plist, 6);
+	SListNodePrint(plist);
+	return plist;
+}
+struct ListNode* removeElements(struct ListNode* head, int val)//删除所有等于val的值
+{
+	if (head == NULL)
+	{
+		return head;
+	}
+	struct ListNode* Newhead = (struct ListNode*)malloc(sizeof(struct ListNode));
+	Newhead->next = head->next;
+	Newhead->val = head->val;
+	head = Newhead;
+	struct ListNode* fast = head;
+	struct ListNode* slow = NULL;
+	while (fast != NULL)
+	{
+		if (fast->val == val)
+		{
+			if (fast == head)
+			{
+				head = head->next;
+				free(fast);
+				fast = head;
+			}
+			else
+			{
+				struct ListNode* cur = fast->next;
+				free(fast);
+				slow->next = cur;
+				fast = cur;
+			}
+
+		}
+
+		else
+		{
+			slow = fast;
+			fast = fast->next;
+
+		}
+	}
+	return head;
+
+}
+void test(ListNode* pf, ListNode** ppf)
+{
+	free(pf);
+	free(*ppf);
+}
+struct ListNode* reverseList(struct ListNode* head)
+{
+	struct ListNode* sed = NULL;
+	struct ListNode* thir = NULL;
+	struct ListNode* fst = head;
+	sed = fst->next;
+	fst->next = NULL;
+	while (sed->next != NULL)
+	{ 
+		thir = sed->next;
+		sed->next = fst;
+		fst = sed;
+		sed = thir;
+	}
+	sed->next = fst;
+	return sed;
+}
+
+int main()
+{
+	int val = 1;
+	ListNode* pf = SList();
+	//ListNode* head = removeElements(pf, val);
+	//test(pf,&pf);
+	ListNode* head = reverseList(pf);
+	SListNodePrint(head);
+	return 0;
+}
