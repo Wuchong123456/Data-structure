@@ -1,0 +1,49 @@
+ bool chkPalindrome(ListNode* A) {
+        ListNode* slow = A;
+        ListNode* fast = A;
+        ListNode* cur1 = A;
+        ListNode* cur2 = NULL;
+        ListNode* move1 = NULL;
+        ListNode* head = NULL;
+        while(fast)
+        {
+            if(fast->next==NULL)
+            {
+                return false;
+            }
+            fast=fast->next->next;
+            slow=slow->next;
+        }
+        head = slow;
+        while(cur1 != slow)
+        {
+            if(cur2 == NULL)
+            {
+                cur2=cur1;
+                cur1=cur1->next;
+                cur2->next = NULL;
+                
+            }
+            else
+            {
+            move1=cur1->next;
+            cur1->next=cur2;
+            cur2=cur1;
+            cur1=move1;
+            }
+            
+        }
+        while(cur2 || head )
+        {
+            if( cur2 == NULL || head == NULL || cur2->val != head->val)
+            {
+                return false;
+            }
+            cur2 = cur2->next; 
+            head = head->next;
+        }
+        return true;
+       
+        
+        // write code here
+    }
