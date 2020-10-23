@@ -1,0 +1,107 @@
+struct ListNode* mergeTwoLists(struct ListNode* l1, struct ListNode* l2)
+{
+    if(l1==NULL)
+    return l2;
+    if(l2==NULL)
+    return l1;
+     struct ListNode* pa =  NULL;//新链表头节点
+     struct ListNode* cur = NULL;//新链表的移动节点
+     while(l1!=NULL || l2!= NULL)
+     {
+         if(l1 !=NULL && l2 != NULL && l1->val > l2->val  )//都不为空时的比较大小
+         {
+             if(pa==NULL)//新链表创建时
+             {
+                 pa =  l2;
+                 cur = l2;    
+                 l2=l2->next;
+             }
+             else//正常插入，插入一个值，cur移动一次
+             {
+            cur->next=l2;
+            cur=cur->next;
+            l2=l2->next;//原链表的正常移动
+             }
+             
+         }
+         else if( l1 != NULL && l2 != NULL && l1->val <= l2->val )//都不为空时的比较大小
+         {
+             if(pa==NULL)//新链表创建时
+             {
+                 pa =  l1;
+                 cur = l1;
+                 l1=l1->next;
+             }
+             else//正常插入，插入一个值，cur移动一次
+             {
+            cur->next=l1;
+            cur=cur->next;
+            l1=l1->next; //原链表正常移动
+             }
+         }
+         else if(l1==NULL)//l1为空时
+         {
+             cur->next=l2;
+             return pa;
+         }
+         else//l2为空或都为空
+         {
+             cur->next = l1;
+             return pa;
+         }
+     }
+
+return pa;
+}
+
+class Partition {
+public:
+    ListNode* partition(ListNode* pHead, int x) {
+        if(pHead == NULL || pHead->next == NULL)
+        {
+            return pHead;
+        }
+        ListNode* head1 = NULL;
+        ListNode* move1 = NULL;
+        ListNode* head2 = NULL;
+        ListNode* move2 = NULL;
+        while(pHead !=NULL)
+        {
+            if(pHead->val < x)
+            {
+                if(head1==NULL)
+                {
+                    head1=pHead;
+                    move1=head1;
+                }
+                else
+                {
+                move1->next = pHead;
+                move1=move1->next;
+                    
+                }
+                
+            }
+            else
+            {
+                if(head2==NULL)
+                {
+                    head2=pHead;
+                    move2=head2;
+                }
+                else
+                {
+                    move2->next = pHead;
+                    move2=move2->next;
+                 
+                }
+                
+            }
+            pHead = pHead->next;
+        }
+        move2->next= NULL;
+        move1->next= head2;
+        return head1;
+        // write code here
+    }
+};
