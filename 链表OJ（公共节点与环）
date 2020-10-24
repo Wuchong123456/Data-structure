@@ -1,0 +1,74 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     struct ListNode *next;
+ * };
+ */
+struct ListNode *getIntersectionNode(struct ListNode *headA, struct ListNode *headB) {
+    if(headA==NULL || headB==NULL)
+    {
+        return NULL;
+    }
+    
+    struct ListNode* curA = headA;
+    struct ListNode* curB = headB;
+    struct ListNode* Public = NULL;
+    int num1 = 0;
+    int num2 = 0;
+    while(curA->next)
+    {
+        curA=curA->next;
+        num1++;
+    }
+    while(curB->next)
+    {
+        curB=curB->next;
+        num2++;
+    }
+    int Gap = abs(num1-num2);
+
+    if(curA!=curB)
+    {
+        printf("1");
+        return NULL;
+    }
+    if(num1>num2)
+    {
+        Public =  Judge(headA,headB,Gap);
+    }
+    else
+    {
+        Public = Judge(headB,headA,Gap);
+    }
+   
+    return Public;
+}
+struct ListNode *detectCycle(struct ListNode *head) {
+    struct ListNode* slow = head;
+    struct ListNode* fast = head;
+    struct ListNode* cur = head;
+    while(fast && fast->next )
+    {
+        slow = slow->next;
+       
+        fast = fast->next->next;
+        
+        if(fast == slow)
+        {
+            break;
+        }
+        
+    }
+    if(fast==NULL || fast->next==NULL )
+    {
+        return NULL;
+    }
+    while(cur!=slow)
+    {
+        cur=cur->next;
+        slow=slow->next;
+    }
+
+  return cur;
+}
