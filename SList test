@@ -20,8 +20,7 @@ static ListNode* OpenNewNode()//开辟节点
 	NewNode->next = NULL;
 	return NewNode;
 }
-void SListNodePushBack(ListNode** plist, int x)//单链表的尾插
-{
+void SListNodePushBack(ListNode** plist, int x)
 	ListNode* NewNode = OpenNewNode();
 	NewNode->val = x;
 	ListNode* cur1 = *plist;
