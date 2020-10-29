@@ -1,0 +1,41 @@
+struct Node* copyRandomList(struct Node* head) {
+   
+    struct Node* move = head;
+    struct Node* cur = NULL;
+    while(move)//插入复制节点
+    {
+      cur = (struct Node*)malloc(sizeof(struct Node));
+        cur->next = move->next;
+        cur->val = move->val;
+        cur->random = NULL;
+        move->next = cur;
+        move=move->next->next;
+    }
+    move = head;
+    cur = move->next;
+    while(move)//链接random
+    {
+        if(move->random)
+        {
+            cur->random = move->random->next;
+        }
+        else
+        {
+            cur->random==NULL;
+        }
+        move=move->next->next;
+        cur=cur->next->next;
+    }
+    move = head;
+    cur = move->next;
+    struct Node* Newhead =cur;
+    while(move->next != NULL)//重新链接链表
+    {
+           move->next = move->next->next;
+           cur->next = cur->next->next;
+           move=move->next;
+           cur= cur->next; 
+    }
+    return Newhead;
+	
+}
