@@ -31,6 +31,8 @@ void HeapSort(int* a, int n);
 //打印数据
 void HeapPrint(Heap* hp);
 
+
+
 return 0;
 
 
