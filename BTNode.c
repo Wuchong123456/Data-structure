@@ -30,13 +30,31 @@ int BinaryTreeSize(BTNode* root)
 	}
 	return BinaryTreeSize(root->_left) + BinaryTreeSize(root->_right);
 }
-int BinaryTreeHight(BTNode* root)
-{
-	if (root == NULL)
-	{
-		return 0;
-	}
-	int leftDepth = BinaryTreeHight(root->_left);
-	int rightDepth = BinaryTreeHight(root->_right);
-	return leftDepth > rightDepth ? leftDepth + 1 : rightDepth + 1;
+int BinaryTreeSize(struct TreeNode* root)
+ {
+     if(root == NULL)
+     {
+         return 0;
+     }
+     
+     return 1 + BinaryTreeSize(root->left)+BinaryTreeSize(root->right);
+ }
+ void _preorderTraversal(struct TreeNode* root,int* retA,int* pi)
+ {
+     if(root== NULL)
+     {
+         return;
+     }
+     retA[(*pi)++]= root->val;
+     _preorderTraversal(root->left,retA,pi);
+     _preorderTraversal(root->right,retA,pi);
+ }
+int* preorderTraversal(struct TreeNode* root, int* returnSize){
+    int size = BinaryTreeSize(root);
+    int* retA = malloc(sizeof(int)*size);
+    *returnSize = size;
+    int i = 0;
+    _preorderTraversal(root,retA,&i);
+
+  return retA;
 }
