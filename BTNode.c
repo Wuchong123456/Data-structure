@@ -1,25 +1,57 @@
+#define  _CRT_SECURE_NO_WARNINGS 1
 #include "BTNode.h"
 
-int BinaryTreeLeve1KSize(BTNode* root, int k)
+BTNode* _BinaryTreeCreate(BTDataType* Aret, int Size, int* pi)
 {
-	if (root == NULL)
+	BTNode* root = NULL;
+	if (*pi>Size)
 	{
-		return 0;
+		return root;
 	}
-	if (k==1)
+	if (Aret[*pi] != '#')
 	{
-		return 1;
+	    root = malloc(sizeof(BTNode));
+		root->_data = Aret[*pi];
+		(*pi)++;
+		root->_left = _BinaryTreeCreate(Aret,Size,pi);
+		root->_right = _BinaryTreeCreate(Aret, Size, pi);
 	}
-	return BinaryTreeLeve1KSize(root->_left, k - 1) + BinaryTreeLeve1KSize(root->_right, k - 1);
-
+	else
+	{
+		(*pi)++;
+		return NULL;
+	}
+	return root;
 }
-int BinaryTreeSize(BTNode* root)
+
+
+BTNode* BinaryTreeCreate()// 通过前序遍历的数组"ABD##E#H##CF##G##"构建二叉树
+{
+	int i = 0;
+	BTDataType arr[] = "ABD##E#H##CF##G##";
+	int Size = strlen(arr);
+	BTDataType* Aret = malloc(sizeof(BTDataType)*Size);
+	strcpy(Aret, arr);
+	int* pi = &i;
+	BTNode* root =  _BinaryTreeCreate(Aret,Size,pi);
+	
+	return root;
+}
+int BinaryTreeDestory(BTNode* root)// 二叉树节点个数
 {
 	if (root == NULL)
 	{
 		return 0;
 	}
-	
+
+	return 1+BinaryTreeDestory(root->_left)+BinaryTreeDestory(root->_right);
+}
+int BinaryTreeSize(BTNode* root)// 二叉树叶子节点个数
+{
+	if (root == NULL)
+	{
+		return 0;
+	}
 	if (root->_left == NULL && root->_right == NULL)
 	{
 		return 1;
@@ -29,32 +61,4 @@ int BinaryTreeSize(BTNode* root)
 		return 0;
 	}
 	return BinaryTreeSize(root->_left) + BinaryTreeSize(root->_right);
-}
-int BinaryTreeSize(struct TreeNode* root)
- {
-     if(root == NULL)
-     {
-         return 0;
-     }
-     
-     return 1 + BinaryTreeSize(root->left)+BinaryTreeSize(root->right);
- }
- void _preorderTraversal(struct TreeNode* root,int* retA,int* pi)
- {
-     if(root== NULL)
-     {
-         return;
-     }
-     retA[(*pi)++]= root->val;
-     _preorderTraversal(root->left,retA,pi);
-     _preorderTraversal(root->right,retA,pi);
- }
-int* preorderTraversal(struct TreeNode* root, int* returnSize){
-    int size = BinaryTreeSize(root);
-    int* retA = malloc(sizeof(int)*size);
-    *returnSize = size;
-    int i = 0;
-    _preorderTraversal(root,retA,&i);
-
-  return retA;
 }
