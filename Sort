@@ -31,6 +31,29 @@ void BubbleSort(int* a, int n)//冒泡排序
 	}
 
 }
+int GetMidIndex(int* a, int begin, int end)//三数取中
+{
+	int mid = (begin + end) >> 1;//begin mid end
+	if (a[begin] < a[mid])
+	{
+		if (a[mid] < a[end])
+			return end;
+		else if (a[begin] < a[end])//a[mid]>a[end]
+			return end;
+		else
+			return begin;
+	}
+	else//a[begin]>a[mid]
+	{
+		if (a[mid]>a[end])
+			return mid;
+		else if (a[begin] < a[mid])
+			return begin;
+		else
+			return mid;
+	}
+	 
+}
 int PartSort1(int* a, int begin, int end)//原版方法
 {
 	int key = a[end];
@@ -52,6 +75,7 @@ int PartSort1(int* a, int begin, int end)//原版方法
 }
 int PartSort2(int* a, int begin, int end)//挖坑法
 {
+
 	int key = a[end];//挖个坑
 	
 	while (begin < end)
@@ -73,6 +97,8 @@ int PartSort2(int* a, int begin, int end)//挖坑法
 }
 int PartSort3(int* a, int begin, int end)//前后指针法
 {
+        int midindex = GetMidIndex(a, begin, end);
+	Swap(&a[midindex], &a[end]); 
 	int key = a[end];
 	int cur = begin;
 	int prev = begin;
@@ -94,6 +120,7 @@ int PartSort3(int* a, int begin, int end)//前后指针法
 }
 void QuickSort(int* a, int begin, int end)//快速排序
 {
+
 	if (begin >= end)
 	{
 		return;
