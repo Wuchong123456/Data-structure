@@ -1,4 +1,6 @@
+#define _CRT_SECURE_NO_WARNINGS 1
 #include <stdio.h>
+#include "stack.h"
 
 void Swap(int* a, int* b)
 {
@@ -75,7 +77,6 @@ int PartSort1(int* a, int begin, int end)//原版方法
 }
 int PartSort2(int* a, int begin, int end)//挖坑法
 {
-
 	int key = a[end];//挖个坑
 	
 	while (begin < end)
@@ -97,7 +98,7 @@ int PartSort2(int* a, int begin, int end)//挖坑法
 }
 int PartSort3(int* a, int begin, int end)//前后指针法
 {
-        int midindex = GetMidIndex(a, begin, end);
+	int midindex = GetMidIndex(a, begin, end);//三数取中
 	Swap(&a[midindex], &a[end]); 
 	int key = a[end];
 	int cur = begin;
@@ -118,9 +119,8 @@ int PartSort3(int* a, int begin, int end)//前后指针法
 	Swap(&a[prev], &a[end]);
 	return prev;
 }
-void QuickSort(int* a, int begin, int end)//快速排序
+void QuickSort(int* a, int begin, int end)//基础快速排序
 {
-
 	if (begin >= end)
 	{
 		return;
@@ -130,30 +130,33 @@ void QuickSort(int* a, int begin, int end)//快速排序
 	QuickSort(a, keyindex + 1, end);
 
 }
-
-void InsertSort(int* a, int n)
+void QuickSortNonR(int*a, int begin, int end)//用栈模拟递归的快速排序
 {
-	int i = 0;
-	for (; i < n - 1; i++)
+	Stack st;//创建栈
+	StackInit(&st);//初始化
+	StackPush(&st, begin);//入栈
+	StackPush(&st, end);//入栈
+	while (StackEmpty(&st))
 	{
-		int end =i;
-		int tmp = a[end + 1];
-		while (end >= 0)
+		int right = StackTop(&st);
+		StackPop(&st);
+		int left = StackTop(&st);
+		StackPop(&st);
+		int keyindex = PartSort3(a, left, right);//[left,keyindex-1],[keyindex+1,right]
+		if (left < keyindex)//什么时候不用往里放
 		{
-			if (tmp < a[end])
-			{
-				a[end + 1] = a[end];
-				end--;
-			}
-			else
-			{
-				break;
-			}
+			StackPush(&st, left);//入栈
+			StackPush(&st, keyindex - 1);//入栈
 
 		}
-		a[end + 1] = tmp;
-
+		if (keyindex+1 < right)
+		{
+			StackPush(&st, keyindex + 1);
+			StackPush(&st, right);
+		}
+	
 	}	
+	StackDestroy(&st);
 }
 void ShellSort(int* a, int n)//希尔排序
 {
@@ -258,6 +261,68 @@ void HeapSort(int* a, int n)//堆排序
 
 	}
 }
+void  _MergeSort(int* a, int begin, int end, int* tmp)//归并排序
+{
+	int mid = (begin + end) >> 1;
+	if (begin < mid)
+	{
+		_MergeSort(a, begin, mid, tmp);
+	}
+	if (mid + 1 < end)
+	{
+		_MergeSort(a, mid + 1, end, tmp);
+	}
+	int begin1 = begin;
+	int begin2 = mid + 1;
+	int end1 = mid;
+	int end2 = end;
+	int i = begin;
+	while (begin1 <= end1 && begin2 <= end2)
+	{
+		if (a[begin1] < a[begin2])
+		{
+			tmp[i] = a[begin1];
+			i++;
+			begin1++;
+			
+		}
+		else
+		{
+			tmp[i] = a[begin2];
+			i++;
+			begin2++;
+		}		
+	}
+	if (begin1 <= end1)
+	{
+		while (begin1 <= end1)
+		{
+			tmp[i] = a[begin1];
+			i++;
+			begin1++;
+		}
+		
+	}
+	if (begin2 <= end2)
+	{
+		while (begin2 <= end2)
+		{
+			tmp[i] = a[begin2];
+			i++;
+			begin2++;
+		}
+	}
+	memcpy(a + begin, tmp + begin, sizeof(int)*(end - begin + 1));
+
+
+}
+void MergeSort(int* a, int n)//归并排序
+{
+	int* tmp = malloc(sizeof(int)*n);
+	_MergeSort(a, 0, n, tmp);
+	
+	free(tmp);
+}
 int main()
 {
 	int a[10] = { 9, 2, 3, 4, 7, 8, 1,6,5,0};
@@ -269,7 +334,9 @@ int main()
 	//InsertSort(a, n);
 	//ShellSort(a, n);
 	//SelectSort(a, n);
-	HeapSort(a, n);
+	//HeapSort(a, n);
+	//QuickSortNonR(a, begin, end);
+	MergeSort(a, n);
 	for (int i = 0; i < n; i++)
 	{
 		printf("%d ", a[i]);
