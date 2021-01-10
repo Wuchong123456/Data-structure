@@ -335,7 +335,7 @@ int main()
 	//ShellSort(a, n);
 	//SelectSort(a, n);
 	//HeapSort(a, n);
-	//QuickSortNonR(a, begin, end);
+	QuickSortNonR(a, begin, end);
 	MergeSort(a, n);
 	for (int i = 0; i < n; i++)
 	{
