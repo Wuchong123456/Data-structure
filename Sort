@@ -9,6 +9,7 @@ void Swap(int* a, int* b)
 	*a = *b;
 	*b = tmp;
 }
+
 void BubbleSort(int* a, int n)//冒泡排序
 {
 	int i = 0;
